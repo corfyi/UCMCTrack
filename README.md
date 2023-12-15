@@ -1,6 +1,8 @@
-# UCMCTrack: Multi-Object Tracking with Uniform Camera Motion Compensation
+# UCMCTrack
 
-**Abstract: ** Multi-object tracking (MOT) in video sequences remains a challenging task, especially in scenarios with significant camera movements. This is because targets can drift considerably on the image plane, leading to erroneous tracking outcomes. Addressing such challenges typically requires supplementary appearance cues or Camera Motion Compensation (CMC). While these strategies are effective, they also introduce a considerable computational burden, posing challenges for real-time MOT. In response to this, we introduce UCMCTrack, a novel motion model-based tracker robust to camera movements. Unlike conventional CMC that computes compensation parameters frame-by-frame, UCMCTrack consistently applies the same compensation parameters throughout a video sequence. It employs a Kalman filter on the ground plane and introduces the Mapped Mahalanobis Distance (MMD) as an alternative to the traditional Intersection over Union (IoU) distance measure. By leveraging projected probability distributions on the ground plane, our approach efficiently captures motion patterns and adeptly manages uncertainties introduced by homography projections. Remarkably, UCMCTrack, relying solely on motion cues, achieves state-of-the-art performance across a variety of challenging datasets, including MOT17, MOT20, DanceTrack and KITTI, with an exceptional speed of over 1000 FPS on a single CPU.
+[![arXiv](https://img.shields.io/badge/arXiv-2312.08952-<COLOR>.svg)](https://arxiv.org/abs/2312.08952)
+
+[AAAI 2024] UCMCTrack: Multi-Object Tracking with Uniform Camera Motion Compensation
 
 *The source code will be released soon.*
 
@@ -33,7 +35,6 @@ $IntrinsicMatrix$
 
 
 
-
 ## Benchmark Performance
 
 
@@ -47,4 +48,13 @@ $IntrinsicMatrix$
 
 
 ## Acknowledgement and Citation
+
+```bibtex
+@inproceedings{yi2024ucmc,
+  title={UCMCTrack: Multi-Object Tracking with Uniform Camera Motion Compensation},
+  author={Kefu Yi, Kai Luo, Xiaolei Luo, Jiangui Huang, Hao Wu, Rongdong Hu, Wei Hao},
+  booktitle={AAAI},
+  year={2024}
+}
+```
 
