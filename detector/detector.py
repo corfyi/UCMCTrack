@@ -12,6 +12,7 @@ class Detection:
         self.bb_height = bb_height
         self.conf = conf
         self.det_class = det_class
+        self.track_id = 0
         self.y = np.zeros((2, 1))
         self.R = np.eye(4)
 
@@ -27,16 +28,15 @@ class Detection:
 
 # Detector类，用于从文本文件读取任意一帧中的目标检测的结果
 class Detector:
-    def __init__(self, fps,img_height,img_width):
-        self.fps = fps
-        self.img_height = img_height
-        self.img_width = img_width
+    def __init__(self):
+        self.seq_length = 0
 
     def load(self,cam_para_file, det_file):
         self.mapper = Mapper(cam_para_file,"MOT17")
         self.load_detfile(det_file)
 
     def load_detfile(self, filename):
+        
         self.dets = dict()
         # 打开文本文件filename
         with open(filename, 'r') as f:
@@ -45,6 +45,8 @@ class Detector:
                 # 将每一行的内容按照空格分开
                 line = line.strip().split(',')
                 frame_id = int(line[0])
+                if frame_id > self.seq_length:
+                    self.seq_length = frame_id
                 det_id = int(line[1])
                 # 新建一个Detection对象
                 det = Detection(det_id)

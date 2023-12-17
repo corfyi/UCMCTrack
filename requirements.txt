@@ -1,0 +1,7 @@
+# TODO: Update with exact module version
+numpy
+filterpy
+lap
+scipy
+
+
