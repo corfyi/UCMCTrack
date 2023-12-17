@@ -197,52 +197,5 @@ class UCMCTrack(object):
                 self.coasted_idx.append(i)
             elif self.trackers[i].status == TrackStatus.Tentative:
                 self.tentative_idx.append(i)
-    
-
-    
-    # def record(self):
-    #     boxes = []
-    #     detections = []
-    #     self.tracks = []
-    #     for i in range(self.dets.shape[0]):
-    #         box = {}
-    #         box['id'] = i+1
-    #         box['bb_left'] = self.dets[i,0]
-    #         box['bb_top'] = self.dets[i,1]
-    #         box['bb_width'] = self.dets[i,2]
-    #         box['bb_height'] = self.dets[i,3]
-    #         box['conf'] = self.dets[i,4]
-    #         box['obj_class'] = 1
-    #         boxes.append(box)
-    #         det = {}
-    #         det['id'] = i+1
-    #         det['track_id'] = -1
-    #         det['cost'] = 0
-    #         det['conf'] = self.dets[i,4]
-    #         det['measurement'] = [self.y_list[i][0,0], 0, self.y_list[i][1,0], 0]
-    #         det['measurement_noise'] = [self.R_list[i][0,0],self.R_list[i][0,1],self.R_list[i][1,0],self.R_list[i][1,1]]
-    #         detections.append(det)
-        
-    #     for trk in self.trackers:
-    #         track = {}
-    #         track['id'] = trk.id
-    #         track['state'] = [trk.kf.x[0,0], trk.kf.x[1,0], trk.kf.x[2,0], trk.kf.x[3,0]]
-    #         track['state_covariance'] = [trk.kf.P[0,0], trk.kf.P[0,1], trk.kf.P[0,2], trk.kf.P[0,3],
-    #                                     trk.kf.P[1,0], trk.kf.P[1,1], trk.kf.P[1,2], trk.kf.P[1,3],
-    #                                     trk.kf.P[2,0], trk.kf.P[2,1], trk.kf.P[2,2], trk.kf.P[2,3],
-    #                                     trk.kf.P[3,0], trk.kf.P[3,1], trk.kf.P[3,2], trk.kf.P[3,3]]
-    #         track['status'] = 1
-    #         track['prob_e'] = 1
-    #         track['age'] = trk.age
-    #         track['det_idx'] = -1
-    #         track['det_id'] = -1
-    #         self.tracks.append(track)
-
-    #     for i,j in self.association.items():
-    #         detections[i]['track_id'] = self.trackers[j].id
-    #         self.tracks[j]['det_idx'] = i
-    #         self.tracks[j]['det_id'] = i+1
-
-    #     record_frame(self.frame_id,boxes, detections, self.tracks)
 
         

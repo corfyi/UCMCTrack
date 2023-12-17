@@ -2,10 +2,10 @@ import numpy as np
 import os
 
 def getUVError(box):
-    u = 0.1*box[2]
+    u = 0.05*box[3]
     v = 0.05*box[3]
-    if u>10:
-        u = 10
+    if u>13:
+        u = 13
     elif u<2:
         u = 2
     if v>10:
