@@ -17,7 +17,8 @@ class KalmanTracker(object):
         self.kf.F = np.array([[1, dt, 0, 0], [0, 1, 0, 0], [0, 0, 1, dt], [0, 0, 0, 1]])
         self.kf.H = np.array([[1, 0, 0, 0], [0, 0, 1, 0]])
         self.kf.R = R
-        np.fill_diagonal(self.kf.P, np.array([1, vmax**2/3, 1,  vmax**2/3]))
+        self.kf.P = np.zeros((4, 4))
+        np.fill_diagonal(self.kf.P, np.array([1, vmax**2/3.0, 1,  vmax**2/3.0]))
     
         G = np.zeros((4, 2))
         G[0,0] = 0.5*dt*dt
@@ -28,8 +29,8 @@ class KalmanTracker(object):
         self.kf.Q = np.dot(np.dot(G, Q0), G.T)
 
         self.kf.x[0] = y[0]
-        self.kf.x[2] = y[1]
         self.kf.x[1] = 0
+        self.kf.x[2] = y[1]
         self.kf.x[3] = 0
 
         self.id = KalmanTracker.count

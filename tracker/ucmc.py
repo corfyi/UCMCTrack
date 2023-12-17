@@ -22,12 +22,12 @@ def linear_assignment(cost_matrix, thresh):
     return matches, unmatched_a, unmatched_b
 
 class UCMCTrack(object):
-    def __init__(self,a1,a2,wx, wy,vmax, max_age, fps, dataset= "kitti", det_thresh = 0.5):
+    def __init__(self,a1,a2,wx, wy,vmax, max_age, fps, dataset, high_score ):
         self.wx = wx
         self.wy = wy
         self.vmax = vmax
         self.dataset = dataset
-        self.det_thresh = det_thresh
+        self.high_score = high_score
         self.max_age = max_age
         self.a1 = a1
         self.a2 = a2
@@ -57,7 +57,7 @@ class UCMCTrack(object):
         detidx_high = []
         detidx_low = []
         for i in range(len(dets)):
-            if dets[i].conf >= self.det_thresh:
+            if dets[i].conf >= self.high_score:
                 detidx_high.append(i)
             else:
                 detidx_low.append(i)
@@ -155,6 +155,7 @@ class UCMCTrack(object):
                 self.trackers[trk_idx].detidx = det_idx
                 dets[det_idx].track_id = self.trackers[trk_idx].id
                 if self.trackers[trk_idx].birth_count >= 2:
+                    self.trackers[trk_idx].birth_count = 0
                     self.trackers[trk_idx].status = TrackStatus.Confirmed
 
             for i in unmatched_b:
@@ -183,7 +184,7 @@ class UCMCTrack(object):
         i = len(self.trackers)
         for trk in reversed(self.trackers):
             i -= 1 
-            if ( trk.status == TrackStatus.Coasted and trk.death_count > self.max_age) or ( trk.status == TrackStatus.Tentative and trk.death_count > 3):
+            if ( trk.status == TrackStatus.Coasted and trk.death_count > self.max_age) or ( trk.status == TrackStatus.Tentative and trk.death_count >= 2):
                   self.trackers.pop(i)
 
     def update_status(self):
