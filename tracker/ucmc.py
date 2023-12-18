@@ -66,9 +66,9 @@ class UCMCTrack(object):
         # Predcit new locations of tracks
         for track in self.trackers:
             track.predict()
-            x,y = self.detector.cmc(track.kf.x[0],track.kf.x[2],track.w,track.h,frame_id)
-            # track.kf.x[0] = x
-            # track.kf.x[2] = y
+            x,y = self.detector.cmc(track.kf.x[0,0],track.kf.x[2,0],track.w,track.h,frame_id)
+            track.kf.x[0,0] = x
+            track.kf.x[2,0] = y
         
         trackidx_remain = []
         self.detidx_remain = []

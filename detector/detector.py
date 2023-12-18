@@ -81,10 +81,11 @@ class Detector:
 
     def cmc(self,x,y,w,h,frame_id):
         u,v = self.mapper.xy2uv(x,y)
-
         affine = self.gmc.get_affine(frame_id)
         M = affine[:,:2]
-        T = affine[:,2]
+        T = np.zeros((2,1))
+        T[0,0] = affine[0,2]
+        T[1,0] = affine[1,2]
 
         p_center = np.array([[u],[v-h/2]])
         p_wh = np.array([[w],[h]])
@@ -94,7 +95,7 @@ class Detector:
         u = p_center[0,0]
         v = p_center[1,0]+p_wh[1,0]/2
 
-        xy,_ = self.mapper.uv2xy(u,v)
+        xy,_ = self.mapper.uv2xy(np.array([[u],[v]]),np.eye(2))
 
         return xy[0,0],xy[1,0]
 
