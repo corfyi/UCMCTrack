@@ -4,7 +4,7 @@ from eval.eval import eval
 
 dataset_path = "E:/dataset/MOT17/train"
 out_path = "output/mot17"
-exp_name = "UCMC"
+exp_name = "val"
 
 seqmap = os.path.join(out_path,exp_name, "val_seqmap.txt")
 

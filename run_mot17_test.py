@@ -8,11 +8,11 @@ import argparse
 
 
 def main(args):
-    det_path = "det_results/mot17/yolox_x_ablation"
+    det_path = "det_results/mot17/bytetrack_x_mot17"
     cam_path = "cam_para/mot17"
     gmc_path = "gmc/mot17"
     out_path = "output/mot17"
-    exp_name = "UCMC"
+    exp_name = "test"
 
     seq_name = args.seq
 
@@ -67,7 +67,7 @@ def main(args):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Process some arguments.')
-    parser.add_argument('--seq', type=str, default = "MOT17-02", help='seq name')
+    parser.add_argument('--seq', type=str, default = "MOT17-01", help='seq name')
     parser.add_argument('--fps', type=float, default=30.0, help='fps')
     parser.add_argument('--wx', type=float, default=0.1, help='wx')
     parser.add_argument('--wy', type=float, default=0.1, help='wy')
