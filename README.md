@@ -1,10 +1,8 @@
 # UCMCTrack
 
-[![arXiv](https://img.shields.io/badge/arXiv-2312.08952-<COLOR>.svg)](https://arxiv.org/abs/2312.08952)
+[![arXiv](https://img.shields.io/badge/arXiv-2312.08952-<COLOR>.svg)](https://arxiv.org/abs/2312.08952) [![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/ucmctrack-multi-object-tracking-with-uniform/multi-object-tracking-on-mot17)](https://paperswithcode.com/sota/multi-object-tracking-on-mot17?p=ucmctrack-multi-object-tracking-with-uniform)
 
 [AAAI 2024] UCMCTrack: Multi-Object Tracking with Uniform Camera Motion Compensation
-
-*The source code will be released soon.*
 
 
 ## Estimated Camera Parameters
@@ -37,9 +35,19 @@ $IntrinsicMatrix$
 
 ## Benchmark Performance
 
+[![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/ucmctrack-multi-object-tracking-with-uniform/multi-object-tracking-on-mot17)](https://paperswithcode.com/sota/multi-object-tracking-on-mot17?p=ucmctrack-multi-object-tracking-with-uniform)
 
+| Dataset         | HOTA | AssA | IDF1 | MOTA | FP     | FN     | IDs   | Frag  |
+| --------------- | ---- | ---- | ---- | ---- | ------ | ------ | ----- | ----- |
+| MOT17 (private) | 65.5 | 66.4 | 80.9 | 80.1 | 34,584 | 75,846 | 1,647 | 2,298 |
+
+*This result was obtained using the Python version of the code. In the paper, the C++ version of the code was used, and the Python version had slightly lower performance metrics than the C++ version (due to some subtle differences in implementation). We will address this issue in the future.*
 
 ## Get Started
+
+```bash
+pip install -r requirements.txt
+```
 
 
 
