@@ -3,7 +3,7 @@ from __future__ import print_function
 
 import numpy as np
 from lap import lapjv
-# from scipy.optimize import linear_sum_assignment
+
 
 from .kalman import KalmanTracker,TrackStatus
 
@@ -74,6 +74,9 @@ class UCMCTrack(object):
         num_det = len(detidx_high)
         num_trk = len(trackidx)
 
+        for trk in self.trackers:
+            trk.detidx = -1
+
         if num_det*num_trk > 0:
             cost_matrix = np.zeros((num_det, num_trk))
             for i in range(num_det):
@@ -121,7 +124,6 @@ class UCMCTrack(object):
                 trk_idx = trackidx_remain[i]
                 self.trackers[trk_idx].status = TrackStatus.Coasted
                 self.trackers[trk_idx].detidx = -1
-                self.trackers[trk_idx].death_count += 1
 
             for i,j in matched_indices:
                 det_idx = detidx_low[i]
@@ -136,42 +138,39 @@ class UCMCTrack(object):
     def associate_tentative(self, dets):
         num_det = len(self.detidx_remain)
         num_trk = len(self.tentative_idx)
-        if num_det*num_trk > 0:
-            cost_matrix = np.zeros((num_det, num_trk))
-            for i in range(num_det):
-                det_idx = self.detidx_remain[i]
-                for j in range(num_trk):
-                    trk_idx = self.tentative_idx[j]
-                    cost_matrix[i,j] = self.trackers[trk_idx].distance(dets[det_idx].y, dets[det_idx].R)
-                
-            matched_indices,unmatched_a,unmatched_b = linear_assignment(cost_matrix,self.a1)
 
-            for i,j in matched_indices:
-                det_idx = self.detidx_remain[i]
+        cost_matrix = np.zeros((num_det, num_trk))
+        for i in range(num_det):
+            det_idx = self.detidx_remain[i]
+            for j in range(num_trk):
                 trk_idx = self.tentative_idx[j]
-                self.trackers[trk_idx].update(dets[det_idx].y, dets[det_idx].R)
-                self.trackers[trk_idx].death_count = 0
-                self.trackers[trk_idx].birth_count += 1
-                self.trackers[trk_idx].detidx = det_idx
-                dets[det_idx].track_id = self.trackers[trk_idx].id
-                if self.trackers[trk_idx].birth_count >= 2:
-                    self.trackers[trk_idx].birth_count = 0
-                    self.trackers[trk_idx].status = TrackStatus.Confirmed
+                cost_matrix[i,j] = self.trackers[trk_idx].distance(dets[det_idx].y, dets[det_idx].R)
+            
+        matched_indices,unmatched_a,unmatched_b = linear_assignment(cost_matrix,self.a1)
 
-            for i in unmatched_b:
-                trk_idx = self.tentative_idx[i]
-                self.trackers[trk_idx].detidx = -1
-                self.trackers[trk_idx].death_count += 1
+        for i,j in matched_indices:
+            det_idx = self.detidx_remain[i]
+            trk_idx = self.tentative_idx[j]
+            self.trackers[trk_idx].update(dets[det_idx].y, dets[det_idx].R)
+            self.trackers[trk_idx].death_count = 0
+            self.trackers[trk_idx].birth_count += 1
+            self.trackers[trk_idx].detidx = det_idx
+            dets[det_idx].track_id = self.trackers[trk_idx].id
+            if self.trackers[trk_idx].birth_count >= 2:
+                self.trackers[trk_idx].birth_count = 0
+                self.trackers[trk_idx].status = TrackStatus.Confirmed
 
-        
-            unmatched_detidx = []
-            for i in unmatched_a:
-                unmatched_detidx.append(self.detidx_remain[i])
-            self.detidx_remain = unmatched_detidx
+        for i in unmatched_b:
+            trk_idx = self.tentative_idx[i]
+            self.trackers[trk_idx].detidx = -1
+
+    
+        unmatched_detidx = []
+        for i in unmatched_a:
+            unmatched_detidx.append(self.detidx_remain[i])
+        self.detidx_remain = unmatched_detidx
 
             
-
-        
     
     def initial_tentative(self,dets):
         for i in self.detidx_remain: 
@@ -183,8 +182,9 @@ class UCMCTrack(object):
     def delete_old_trackers(self):
         i = len(self.trackers)
         for trk in reversed(self.trackers):
+            trk.death_count += 1
             i -= 1 
-            if ( trk.status == TrackStatus.Coasted and trk.death_count > self.max_age) or ( trk.status == TrackStatus.Tentative and trk.death_count >= 2):
+            if ( trk.status == TrackStatus.Coasted and trk.death_count >= self.max_age) or ( trk.status == TrackStatus.Tentative and trk.death_count >= 2):
                   self.trackers.pop(i)
 
     def update_status(self):
