@@ -22,7 +22,7 @@ def linear_assignment(cost_matrix, thresh):
     return matches, unmatched_a, unmatched_b
 
 class UCMCTrack(object):
-    def __init__(self,a1,a2,wx, wy,vmax, max_age, fps, dataset, high_score ):
+    def __init__(self,a1,a2,wx, wy,vmax, max_age, fps, dataset, high_score, detector = None):
         self.wx = wx
         self.wy = wy
         self.vmax = vmax
@@ -31,7 +31,6 @@ class UCMCTrack(object):
         self.max_age = max_age
         self.a1 = a1
         self.a2 = a2
-        self.frame_id = 1
         self.dt = 1.0/fps
 
         self.trackers = []
@@ -39,10 +38,12 @@ class UCMCTrack(object):
         self.coasted_idx = []
         self.tentative_idx = []
 
+        self.detector = detector
 
-    def update(self, dets):
+
+    def update(self, dets,frame_id):
         
-        self.data_association(dets)
+        self.data_association(dets,frame_id)
         
         self.associate_tentative(dets)
         
@@ -50,9 +51,9 @@ class UCMCTrack(object):
         
         self.delete_old_trackers()
         
-        self.update_status()
+        self.update_status(dets)
     
-    def data_association(self, dets):
+    def data_association(self, dets,frame_id):
         # Separate detections into high score and low score
         detidx_high = []
         detidx_low = []
@@ -65,6 +66,9 @@ class UCMCTrack(object):
         # Predcit new locations of tracks
         for track in self.trackers:
             track.predict()
+            x,y = self.detector.cmc(track.kf.x[0],track.kf.x[2],track.w,track.h,frame_id)
+            # track.kf.x[0] = x
+            # track.kf.x[2] = y
         
         trackidx_remain = []
         self.detidx_remain = []
@@ -174,7 +178,7 @@ class UCMCTrack(object):
     
     def initial_tentative(self,dets):
         for i in self.detidx_remain: 
-            self.trackers.append(KalmanTracker(dets[i].y,dets[i].R,self.wx,self.wy,self.vmax,self.dt))
+            self.trackers.append(KalmanTracker(dets[i].y,dets[i].R,self.wx,self.wy,self.vmax, dets[i].bb_width,dets[i].bb_height,self.dt))
             self.trackers[-1].status = TrackStatus.Tentative
             self.trackers[-1].detidx = i
         self.detidx_remain = []
@@ -187,11 +191,17 @@ class UCMCTrack(object):
             if ( trk.status == TrackStatus.Coasted and trk.death_count >= self.max_age) or ( trk.status == TrackStatus.Tentative and trk.death_count >= 2):
                   self.trackers.pop(i)
 
-    def update_status(self):
+    def update_status(self,dets):
         self.confirmed_idx = []
         self.coasted_idx = []
         self.tentative_idx = []
         for i in range(len(self.trackers)):
+
+            detidx = self.trackers[i].detidx
+            if detidx >= 0 and detidx < len(dets):
+                self.trackers[i].h = dets[detidx].bb_height
+                self.trackers[i].w = dets[detidx].bb_width
+
             if self.trackers[i].status == TrackStatus.Confirmed:
                 self.confirmed_idx.append(i)
             elif self.trackers[i].status == TrackStatus.Coasted:

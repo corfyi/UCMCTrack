@@ -114,6 +114,16 @@ class Mapper(object):
         sigma_xy = np.dot(np.dot(C, sigma_uv), C.T)
         return xy, sigma_xy
     
+    def xy2uv(self,x,y):
+        if self.is_ok == False:
+            return None, None
+        xy1 = np.zeros((3, 1))
+        xy1[0,0] = x
+        xy1[1,0] = y
+        xy1[2,0] = 1
+        uv1 = np.dot(self.A, xy1)
+        return uv1[0,0]/uv1[2,0],uv1[1,0]/uv1[2,0]
+    
     def mapto(self,box):
         uv = np.array([[box[0]+box[2]/2], [box[1]+box[3]]])
         u_err,v_err = getUVError(box)

@@ -1,5 +1,7 @@
 from .mapper import Mapper
+from .gmc import GMCLoader
 import numpy as np
+
 
 # 定义一个Detection类，包含id,bb_left,bb_top,bb_width,bb_height,conf,det_class
 class Detection:
@@ -30,10 +32,14 @@ class Detection:
 class Detector:
     def __init__(self):
         self.seq_length = 0
+        self.gmc = None
 
-    def load(self,cam_para_file, det_file):
+    def load(self,cam_para_file, det_file, gmc_file = None):
         self.mapper = Mapper(cam_para_file,"MOT17")
         self.load_detfile(det_file)
+
+        if gmc_file is not None:
+            self.gmc = GMCLoader(gmc_file)
 
     def load_detfile(self, filename):
         
@@ -70,5 +76,26 @@ class Detector:
         dets = self.dets[frame_id]
         dets = [det for det in dets if det.det_class == det_class and det.conf >= conf_thresh]
         return dets
+    
+
+
+    def cmc(self,x,y,w,h,frame_id):
+        u,v = self.mapper.xy2uv(x,y)
+
+        affine = self.gmc.get_affine(frame_id)
+        M = affine[:,:2]
+        T = affine[:,2]
+
+        p_center = np.array([[u],[v-h/2]])
+        p_wh = np.array([[w],[h]])
+        p_center = np.dot(M,p_center) + T
+        p_wh = np.dot(M,p_wh)
+
+        u = p_center[0,0]
+        v = p_center[1,0]+p_wh[1,0]/2
+
+        xy,_ = self.mapper.uv2xy(u,v)
+
+        return xy[0,0],xy[1,0]
 
 
