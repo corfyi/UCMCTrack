@@ -8,7 +8,7 @@
             "name": "Debug UCMC",
             "type": "python",
             "request": "launch",
-            "program": "run_ucmc.py",
+            "program": "run_mot17_val.py",
             "console": "integratedTerminal",
             "cwd": "${workspaceFolder}",
             "justMyCode": true

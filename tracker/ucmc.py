@@ -22,7 +22,7 @@ def linear_assignment(cost_matrix, thresh):
     return matches, unmatched_a, unmatched_b
 
 class UCMCTrack(object):
-    def __init__(self,a1,a2,wx, wy,vmax, max_age, fps, dataset, high_score, detector = None):
+    def __init__(self,a1,a2,wx, wy,vmax, max_age, fps, dataset, high_score, use_cmc,detector = None):
         self.wx = wx
         self.wy = wy
         self.vmax = vmax
@@ -32,6 +32,8 @@ class UCMCTrack(object):
         self.a1 = a1
         self.a2 = a2
         self.dt = 1.0/fps
+
+        self.use_cmc = use_cmc
 
         self.trackers = []
         self.confirmed_idx = []
@@ -66,9 +68,10 @@ class UCMCTrack(object):
         # Predcit new locations of tracks
         for track in self.trackers:
             track.predict()
-            x,y = self.detector.cmc(track.kf.x[0,0],track.kf.x[2,0],track.w,track.h,frame_id)
-            track.kf.x[0,0] = x
-            track.kf.x[2,0] = y
+            if self.use_cmc:
+                x,y = self.detector.cmc(track.kf.x[0,0],track.kf.x[2,0],track.w,track.h,frame_id)
+                track.kf.x[0,0] = x
+                track.kf.x[2,0] = y
         
         trackidx_remain = []
         self.detidx_remain = []
@@ -127,6 +130,7 @@ class UCMCTrack(object):
             for i in unmatched_b:
                 trk_idx = trackidx_remain[i]
                 self.trackers[trk_idx].status = TrackStatus.Coasted
+                # self.trackers[trk_idx].death_count += 1
                 self.trackers[trk_idx].detidx = -1
 
             for i,j in matched_indices:
@@ -166,6 +170,7 @@ class UCMCTrack(object):
 
         for i in unmatched_b:
             trk_idx = self.tentative_idx[i]
+            # self.trackers[trk_idx].death_count += 1
             self.trackers[trk_idx].detidx = -1
 
     
