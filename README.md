@@ -2,7 +2,11 @@
 
 [![arXiv](https://img.shields.io/badge/arXiv-2312.08952-<COLOR>.svg)](https://arxiv.org/abs/2312.08952) [![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/ucmctrack-multi-object-tracking-with-uniform/multi-object-tracking-on-mot17)](https://paperswithcode.com/sota/multi-object-tracking-on-mot17?p=ucmctrack-multi-object-tracking-with-uniform)
 
-[AAAI 2024] UCMCTrack: Multi-Object Tracking with Uniform Camera Motion Compensation
+**[AAAI 2024] UCMCTrack: Multi-Object Tracking with Uniform Camera Motion Compensation**
+
+UCMCTrack is a simple pure motion based tracker that achieves state-of-the-art performance on multiple datasets. In particular, it achieves the first place on MOT17 (IDF1, HOTA) without using any appearance cues, making it highly applicable for real-time object tracking on end devices.
+
+
 
 
 ## Estimated Camera Parameters
@@ -45,8 +49,22 @@ $IntrinsicMatrix$
 
 ## Get Started
 
+- Install the required dependency packages 
+
 ```bash
 pip install -r requirements.txt
+```
+
+- Run UCMCTrack on the MOT17 test dataset, and the tracking results are saved in the folder `output/mot17/test`
+
+```bash
+. run_mot17_test.bat
+```
+
+- Run UCMCTrack on the MOT17 validation dataset and evaluate performance metrics such as IDF1, HOTA, and MOTA locally
+
+```bash
+. run_mot17_val.bat
 ```
 
 
