@@ -58,6 +58,33 @@ pip install -r requirements.txt
 
 ## Demo
 
+This demo demonstrates the use of YOLOv8x as the detector and UCMCTrack as the tracker for real-time vehicle detection and tracking from a video file. The demo processes the video file `demo.mp4` to detect and track vehicles, saving the tracking results in the `output` folder. In the case of significant camera shake, UCMCTrack still has good performance without using any appearance information.
+
+![](demo/demo.gif)
+
+#### Environment
+
+Before you begin, ensure you have the following prerequisites installed on your system:
+
+- Python (3.8 or later)
+
+- PyTorch with CUDA support
+
+- Ultralytics Library
+
+- Download weight file [yolov8x.pt](https://github.com/ultralytics/assets/releases/download/v0.0.0/yolov8x.pt) to folder `pretrained`
+
+
+#### Run the demo
+
+```bash
+python demo.py --cam_para demo/cam_para.txt --video demo/demo.mp4
+```
+
+The file `demo/cam_para.txt` is the camera parameters estimated from a single image. The code of this tool will be open-sourced in the future.
+
+![](demo/demo_cam_para.jpg)
+
 
 
 ## Roadmap
@@ -68,7 +95,7 @@ We are continuously updating UCMCTrack and warmly welcome contributions to enhan
 
 - [x] Release code for replicating results on MOT20 dataset.
 
-- [ ] Implement a demo of UCMCTrack based on YOLOv8.
+- [x] Implement a demo of UCMCTrack based on YOLOv8.
 
 - [ ] Release code for estimating camera parameters from a single picture.
 
