@@ -1,12 +1,25 @@
 # UCMCTrack
 
 [![arXiv](https://img.shields.io/badge/arXiv-2312.08952-<COLOR>.svg)](https://arxiv.org/abs/2312.08952)
+
 [![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/ucmctrack-multi-object-tracking-with-uniform/multi-object-tracking-on-mot17)](https://paperswithcode.com/sota/multi-object-tracking-on-mot17?p=ucmctrack-multi-object-tracking-with-uniform)
+
 [![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/ucmctrack-multi-object-tracking-with-uniform/multi-object-tracking-on-mot20-1)](https://paperswithcode.com/sota/multi-object-tracking-on-mot20-1?p=ucmctrack-multi-object-tracking-with-uniform)
 
 **[AAAI 2024] UCMCTrack: Multi-Object Tracking with Uniform Camera Motion Compensation**
 
 UCMCTrack is a simple pure motion based tracker that achieves state-of-the-art performance on multiple datasets. In particular, it achieves the first place on MOT17 (IDF1, HOTA) without using any appearance cues, making it highly applicable for real-time object tracking on end devices.
+
+## Roadmap
+
+We are continuously updating UCMCTrack and warmly welcome contributions to enhance its value for the community. Our current high-priority tasks are as follows:
+
+- [x] ~~Release code for replicating results on MOT17 dataset.~~
+- [x] ~~Release code for replicating results on MOT20 dataset.~~
+- [x] ~~Implement a demo of UCMCTrack based on YOLOv8.~~
+- [ ] Release code for estimating camera parameters from a single picture.
+- [ ] Release code for replicating results on DanceTrack dataset.
+- [ ] Release code for replicating results on Kitti dataset.
 
 
 ## Demo
@@ -53,6 +66,7 @@ First, the detection boxes are mapped onto the ground plane using homography tra
 ## Benchmark Performance
 
 [![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/ucmctrack-multi-object-tracking-with-uniform/multi-object-tracking-on-mot17)](https://paperswithcode.com/sota/multi-object-tracking-on-mot17?p=ucmctrack-multi-object-tracking-with-uniform)
+
 [![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/ucmctrack-multi-object-tracking-with-uniform/multi-object-tracking-on-mot20-1)](https://paperswithcode.com/sota/multi-object-tracking-on-mot20-1?p=ucmctrack-multi-object-tracking-with-uniform)
 
 | Dataset    | HOTA | AssA | IDF1 | MOTA | FP     | FN     | IDs   | Frag  |
@@ -90,24 +104,6 @@ pip install -r requirements.txt
 
 
 
-## Roadmap
-
-We are continuously updating UCMCTrack and warmly welcome contributions to enhance its value for the community. Our current high-priority tasks are as follows:
-
-- [x] ~~Release code for replicating results on MOT17 dataset.~~
-
-- [x] ~~Release code for replicating results on MOT20 dataset.~~
-
-- [x] ~~Implement a demo of UCMCTrack based on YOLOv8.~~
-
-- [ ] Release code for estimating camera parameters from a single picture.
-
-- [ ] Release code for replicating results on DanceTrack dataset.
-
-- [ ] Release code for replicating results on Kitti dataset.
-
-  
-
 ## Estimated Camera Parameters
 
 This directory provides camera parameters we have estimated:
@@ -134,7 +130,9 @@ $IntrinsicMatrix$
 0 1213 540 
 0 0 1 
 
-## Acknowledgement and Citation
+
+
+## Citation
 
 ```bibtex
 @inproceedings{yi2024ucmc,
