@@ -8,15 +8,47 @@
 
 UCMCTrack is a simple pure motion based tracker that achieves state-of-the-art performance on multiple datasets. In particular, it achieves the first place on MOT17 (IDF1, HOTA) without using any appearance cues, making it highly applicable for real-time object tracking on end devices.
 
+
+## Demo
+
+This demo demonstrates the use of YOLOv8x as the detector and UCMCTrack as the tracker for real-time vehicle detection and tracking from a video file. The demo processes the video file `demo.mp4` to detect and track vehicles, saving the tracking results in the `output` folder. In the case of significant camera shake, UCMCTrack still has good performance without using any appearance information.
+
+![](demo/demo.gif)
+
+#### Environment
+
+Before you begin, ensure you have the following prerequisites installed on your system:
+
+- Python (3.8 or later)
+
+- PyTorch with CUDA support
+
+- Ultralytics Library
+
+- Download weight file [yolov8x.pt](https://github.com/ultralytics/assets/releases/download/v0.0.0/yolov8x.pt) to folder `pretrained`
+
+
+#### Run the demo
+
+```bash
+python demo.py --cam_para demo/cam_para.txt --video demo/demo.mp4
+```
+
+The file `demo/cam_para.txt` is the camera parameters estimated from a single image. The code of this tool will be open-sourced in the future.
+
+![](demo/demo_cam_para.jpg)
+
+### The pipeline of UCMCTrack
+
+First, the detection boxes are mapped onto the ground plane using homography transformation. Subsequently, the Correlated Measurement Distribution (CMD) of the target is computed. This distribution is then fed into a Kalman filter equipped with the Constant Velocity (CV) motion model and Process Noise Compensation (PNC). Next, the mapped measurement and the predicted track state are utilized as inputs to compute the Mapped Mahalanobis Distance (MMD). Finally, the Hungarian algorithm is applied to associate the mapped measurements with tracklets, thereby obtaining complete tracklets.
+
 ![](docs/pipeline.png)
 
-**The pipeline of the proposed UCMCTrack.** First, the detection boxes are mapped onto the ground plane using homography transformation. Subsequently, the Correlated Measurement Distribution (CMD) of the target is computed. This distribution is then fed into a Kalman filter equipped with the Constant Velocity (CV) motion model and Process Noise Compensation (PNC). Next, the mapped measurement and the predicted track state are utilized as inputs to compute the Mapped Mahalanobis Distance (MMD). Finally, the Hungarian algorithm is applied to associate the mapped measurements with tracklets, thereby obtaining complete tracklets.
+### Visualization of distance measures
 
-
+(a) Visualization of IoU on the image plane. IoU fails as there is no intersection between bounding boxes. (b) Visualization of Mapped Mahalanobis Distance (MMD) without Correlated Measurement Distribution (CMD). Incorrect associations occur due to insufficient utilization of distribution information. (c) Visualization of MMD with CMD. Correct associations after using the correlated probability distribution, undergoing a rotation on the ground plane.
 
 ![](docs/distance_measure.png)
-
-**Visualization of distance measures.** (a) Visualization of IoU on the image plane. IoU fails as there is no intersection between bounding boxes. (b) Visualization of Mapped Mahalanobis Distance (MMD) without Correlated Measurement Distribution (CMD). Incorrect associations occur due to insufficient utilization of distribution information. (c) Visualization of MMD with CMD. Correct associations after using the correlated probability distribution, undergoing a rotation on the ground plane.
 
 ## Benchmark Performance
 
@@ -56,46 +88,17 @@ pip install -r requirements.txt
 . run_mot20_test.bat
 ```
 
-## Demo
-
-This demo demonstrates the use of YOLOv8x as the detector and UCMCTrack as the tracker for real-time vehicle detection and tracking from a video file. The demo processes the video file `demo.mp4` to detect and track vehicles, saving the tracking results in the `output` folder. In the case of significant camera shake, UCMCTrack still has good performance without using any appearance information.
-
-![](demo/demo.gif)
-
-#### Environment
-
-Before you begin, ensure you have the following prerequisites installed on your system:
-
-- Python (3.8 or later)
-
-- PyTorch with CUDA support
-
-- Ultralytics Library
-
-- Download weight file [yolov8x.pt](https://github.com/ultralytics/assets/releases/download/v0.0.0/yolov8x.pt) to folder `pretrained`
-
-
-#### Run the demo
-
-```bash
-python demo.py --cam_para demo/cam_para.txt --video demo/demo.mp4
-```
-
-The file `demo/cam_para.txt` is the camera parameters estimated from a single image. The code of this tool will be open-sourced in the future.
-
-![](demo/demo_cam_para.jpg)
-
 
 
 ## Roadmap
 
 We are continuously updating UCMCTrack and warmly welcome contributions to enhance its value for the community. Our current high-priority tasks are as follows:
 
-- [x] Release code for replicating results on MOT17 dataset.
+- [x] ~~Release code for replicating results on MOT17 dataset.~~
 
-- [x] Release code for replicating results on MOT20 dataset.
+- [x] ~~Release code for replicating results on MOT20 dataset.~~
 
-- [x] Implement a demo of UCMCTrack based on YOLOv8.
+- [x] ~~Implement a demo of UCMCTrack based on YOLOv8.~~
 
 - [ ] Release code for estimating camera parameters from a single picture.
 
@@ -130,10 +133,6 @@ $IntrinsicMatrix$
 1213 0 960 
 0 1213 540 
 0 0 1 
-
-
-
-
 
 ## Acknowledgement and Citation
 
