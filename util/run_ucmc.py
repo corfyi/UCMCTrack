@@ -37,10 +37,16 @@ def run_ucmc(args, det_path = "det_results/mot17/yolox_x_ablation",
         os.makedirs(orig_save_path)
 
 
-    det_file = os.path.join(det_path, f"{seq_name}-SDP.txt")
-    cam_para = os.path.join(cam_path, f"{seq_name}-SDP.txt")
+    if dataset == "MOT17":
+        det_file = os.path.join(det_path, f"{seq_name}-SDP.txt")
+        cam_para = os.path.join(cam_path, f"{seq_name}-SDP.txt")
+        result_file = os.path.join(orig_save_path,f"{seq_name}-SDP.txt")
+    elif dataset == "MOT20":
+        det_file = os.path.join(det_path, f"{seq_name}.txt")
+        cam_para = os.path.join(cam_path, f"{seq_name}.txt")
+        result_file = os.path.join(orig_save_path,f"{seq_name}.txt")
+
     gmc_file = os.path.join(gmc_path, f"GMC-{seq_name}.txt")
-    result_file = os.path.join(orig_save_path,f"{seq_name}-SDP.txt")
 
     print(det_file)
     print(cam_para)
