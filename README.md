@@ -10,16 +10,8 @@
 
 UCMCTrack is a simple pure motion based tracker that achieves state-of-the-art performance on multiple datasets. In particular, it achieves the first place on MOT17 (IDF1, HOTA) without using any appearance cues, making it highly applicable for real-time object tracking on end devices.
 
-## Roadmap
-
-We are continuously updating UCMCTrack and warmly welcome contributions to enhance its value for the community. Our current high-priority tasks are as follows:
-
-- [x] ~~Release code for replicating results on MOT17 dataset.~~
-- [x] ~~Release code for replicating results on MOT20 dataset.~~
-- [x] ~~Implement a demo of UCMCTrack based on YOLOv8.~~
-- [ ] Release code for estimating camera parameters from a single picture.
-- [ ] Release code for replicating results on DanceTrack dataset.
-- [ ] Release code for replicating results on Kitti dataset.
+## News
+* [12/29/2023]  **Open-Sourcing a Tool for Estimating Camera Parameters from a Single Image！** For specific steps, refer to Get Started.
 
 
 ## Demo
@@ -102,6 +94,14 @@ pip install -r requirements.txt
 . run_mot20_test.bat
 ```
 
+- Estimating camera parameters from a single image
+
+```bash
+python util/estimate_cam_para.py --img demo/demo.jpg --cam_para demo/cam_para_test.txt
+```
+
+press 'q' on the Image UI window to quit and save camera parameters.
+
 
 
 ## Estimated Camera Parameters
@@ -131,6 +131,24 @@ $IntrinsicMatrix$
 0 0 1 
 
 
+
+## Roadmap
+
+We are continuously updating UCMCTrack and warmly welcome contributions to enhance its value for the community. Our current high-priority tasks are as follows:
+
+- [x] ~~Release code for replicating results on MOT17 dataset.~~
+
+- [x] ~~Release code for replicating results on MOT20 dataset.~~
+
+- [x] ~~Implement a demo of UCMCTrack based on YOLOv8.~~
+
+- [x] ~~Release code for estimating camera parameters from a single picture.~~
+
+- [ ] Release code for replicating results on DanceTrack dataset.
+
+- [ ] Release code for replicating results on Kitti dataset.
+
+  
 
 ## Citation
 
