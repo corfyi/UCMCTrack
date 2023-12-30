@@ -4,5 +4,6 @@ filterpy
 lap
 scipy
 argparse
-
+ultralytics
+cv2
 
