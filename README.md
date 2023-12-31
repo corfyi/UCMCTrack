@@ -5,9 +5,11 @@
 
 [![arXiv](https://img.shields.io/badge/arXiv-2312.08952-<COLOR>.svg)](https://arxiv.org/abs/2312.08952) [![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/ucmctrack-multi-object-tracking-with-uniform/multi-object-tracking-on-mot17)](https://paperswithcode.com/sota/multi-object-tracking-on-mot17?p=ucmctrack-multi-object-tracking-with-uniform) [![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/ucmctrack-multi-object-tracking-with-uniform/multi-object-tracking-on-mot20-1)](https://paperswithcode.com/sota/multi-object-tracking-on-mot20-1?p=ucmctrack-multi-object-tracking-with-uniform)
 
+
 ## 🚗 Tracking Vehicles with Moving Camera
 
 ![](demo/demo.gif)
+
 
 ## 📷 Estimating Camera Parameter from a Single Image
 
@@ -45,13 +47,13 @@ The file `demo/cam_para.txt` is the camera parameters estimated from a single im
 
 
 
-## 🗺️ The pipeline of UCMCTrack
+## 🗺️ Pipeline of UCMCTrack
 
 First, the detection boxes are mapped onto the ground plane using homography transformation. Subsequently, the Correlated Measurement Distribution (CMD) of the target is computed. This distribution is then fed into a Kalman filter equipped with the Constant Velocity (CV) motion model and Process Noise Compensation (PNC). Next, the mapped measurement and the predicted track state are utilized as inputs to compute the Mapped Mahalanobis Distance (MMD). Finally, the Hungarian algorithm is applied to associate the mapped measurements with tracklets, thereby obtaining complete tracklets.
 
 ![](docs/pipeline.png)
 
-## 🖼️ Visualization of distance measures
+## 🖼️ Visualization of Different Distances
 
 (a) Visualization of IoU on the image plane. IoU fails as there is no intersection between bounding boxes. (b) Visualization of Mapped Mahalanobis Distance (MMD) without Correlated Measurement Distribution (CMD). Incorrect associations occur due to insufficient utilization of distribution information. (c) Visualization of MMD with CMD. Correct associations after using the correlated probability distribution, undergoing a rotation on the ground plane.
 
@@ -110,27 +112,32 @@ press 'q' on the Image UI window to quit and save camera parameters.
 
 This directory provides camera parameters we have estimated:
 
-└─cam_para
+```
+├─cam_para
     ├─DanceTrack
     ├─MOT17
     └─MOT20
+```
 
 We have provided the camera parameter files estimated on the datasets MOT17, MOT20 and DanceTrack. The specific format of the camera parameter file consists of following three parts. Among them, $IntrinsicMatrix$ represents the intrinsic parameters Ki of the camera, the first and second columns represent the focal lengths of the camera in the x and y directions, and the third column is the offset when the origin of the physical imaging plane moves to the pixel plane. $RotationMatrices$ and $TranslationVectors$ represent key components of the camera’s extrinsic parameters Ko. Among them, $RotationMatrices$ represents the rotation of the camera relative to the ground plane, while $TranslationVectors$ represents the offset of the camera relative to the ground plane, in millimeters.
 
 #### Sample
 
-$RotationMatrices$
+```txt
+RotationMatrices
 0.00000 -1.00000 0.00000
 -0.05234 0.00000 -0.99863
 0.99863 0.00000 -0.05234
 
-$TranslationVectors$
+TranslationVectors
 0 1391 3968 
 
-$IntrinsicMatrix$
+IntrinsicMatrix
 1213 0 960 
 0 1213 540 
 0 0 1 
+```
+
 
 
 
