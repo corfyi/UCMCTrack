@@ -16,7 +16,7 @@ UCMCTrack is a simple pure motion based tracker that achieves state-of-the-art p
 
 ## Demo
 
-This demo demonstrates the use of YOLOv8x as the detector and UCMCTrack as the tracker for real-time vehicle detection and tracking from a video file. The demo processes the video file `demo.mp4` to detect and track vehicles, saving the tracking results in the `output` folder. In the case of significant camera shake, UCMCTrack still has good performance without using any appearance information.
+This demo demonstrates the use of YOLOv8x as the detector and UCMCTrack as the tracker for real-time vehicle detection and tracking from a video file. The demo processes the video file `demo.mp4` to detect and track vehicles, saving the tracking results in the `output` folder. <u>In the case of significant camera shake</u>, UCMCTrack still has good performance without using any appearance information.
 
 ![](demo/demo.gif)
 
@@ -39,7 +39,7 @@ Before you begin, ensure you have the following prerequisites installed on your 
 python demo.py --cam_para demo/cam_para.txt --video demo/demo.mp4
 ```
 
-The file `demo/cam_para.txt` is the camera parameters estimated from a single image. The code of this tool will be open-sourced in the future.
+The file `demo/cam_para.txt` is the camera parameters estimated from a single image. The code of this tool is released.  For specific steps, please refer to the Get Started.
 
 ![](demo/demo_cam_para.jpg)
 
