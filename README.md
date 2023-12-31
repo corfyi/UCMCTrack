@@ -8,7 +8,7 @@
 
 **[AAAI 2024] UCMCTrack: Multi-Object Tracking with Uniform Camera Motion Compensation**
 
-UCMCTrack is a simple pure motion based tracker that achieves state-of-the-art performance on multiple datasets. In particular, it achieves the first place on MOT17 (IDF1, HOTA) without using any appearance cues, making it highly applicable for real-time object tracking on end devices.
+UCMCTrack is a simple pure motion based tracker that achieves state-of-the-art performance on multiple datasets. In particular, **it achieves the first place on MOT17 without using any appearance cues**, making it highly applicable for real-time object tracking on end devices.
 
 ## News
 * [12/29/2023]  **Open-Sourcing a Tool for Estimating Camera Parameters from a Single Image！** For specific steps, refer to Get Started.
@@ -16,7 +16,7 @@ UCMCTrack is a simple pure motion based tracker that achieves state-of-the-art p
 
 ## Demo
 
-This demo demonstrates the use of YOLOv8x as the detector and UCMCTrack as the tracker for real-time vehicle detection and tracking from a video file. The demo processes the video file `demo.mp4` to detect and track vehicles, saving the tracking results in the `output` folder. <u>In the case of significant camera shake</u>, UCMCTrack still has good performance without using any appearance information.
+This demo demonstrates the use of YOLOv8x as the detector and UCMCTrack as the tracker for real-time vehicle detection and tracking from a video file. The demo processes the video file `demo.mp4` to detect and track vehicles, saving the tracking results in the `output` folder. **In the case of significant camera shake**, UCMCTrack still has good performance without using any appearance information.
 
 ![](demo/demo.gif)
 
