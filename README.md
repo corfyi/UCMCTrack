@@ -41,7 +41,7 @@ python demo.py --cam_para demo/cam_para.txt --video demo/demo.mp4
 
 The file `demo/cam_para.txt` is the camera parameters estimated from a single image. The code of this tool is released.  For specific steps, please refer to the Get Started.
 
-![](demo/demo_cam_para.jpg)
+![](docs/camera_parameter_estimation.gif)
 
 ### The pipeline of UCMCTrack
 
