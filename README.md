@@ -1,35 +1,36 @@
 # UCMCTrack
 
-[![arXiv](https://img.shields.io/badge/arXiv-2312.08952-<COLOR>.svg)](https://arxiv.org/abs/2312.08952)
-
-[![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/ucmctrack-multi-object-tracking-with-uniform/multi-object-tracking-on-mot17)](https://paperswithcode.com/sota/multi-object-tracking-on-mot17?p=ucmctrack-multi-object-tracking-with-uniform)
-
-[![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/ucmctrack-multi-object-tracking-with-uniform/multi-object-tracking-on-mot20-1)](https://paperswithcode.com/sota/multi-object-tracking-on-mot20-1?p=ucmctrack-multi-object-tracking-with-uniform)
+[![arXiv](https://img.shields.io/badge/arXiv-2312.08952-<COLOR>.svg)](https://arxiv.org/abs/2312.08952) [![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/ucmctrack-multi-object-tracking-with-uniform/multi-object-tracking-on-mot17)](https://paperswithcode.com/sota/multi-object-tracking-on-mot17?p=ucmctrack-multi-object-tracking-with-uniform) [![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/ucmctrack-multi-object-tracking-with-uniform/multi-object-tracking-on-mot20-1)](https://paperswithcode.com/sota/multi-object-tracking-on-mot20-1?p=ucmctrack-multi-object-tracking-with-uniform)
 
 **[AAAI 2024] UCMCTrack: Multi-Object Tracking with Uniform Camera Motion Compensation**
 
 UCMCTrack is a simple pure motion based tracker that achieves state-of-the-art performance on multiple datasets. In particular, **it achieves the first place on MOT17 without using any appearance cues**, making it highly applicable for real-time object tracking on end devices.
 
+**Tracking Vehicles**
+![](demo/demo.gif)
+
+**Estimating Camera Parameter from a Single Image**
+![](docs/camera_parameter_estimation.gif)
+
+
+
 ## News
+
 * [12/29/2023]  **Open-Sourcing a Tool for Estimating Camera Parameters from a Single Image！** For specific steps, refer to Get Started.
+
 
 
 ## Demo
 
 This demo demonstrates the use of YOLOv8x as the detector and UCMCTrack as the tracker for real-time vehicle detection and tracking from a video file. The demo processes the video file `demo.mp4` to detect and track vehicles, saving the tracking results in the `output` folder. **In the case of significant camera shake**, UCMCTrack still has good performance without using any appearance information.
 
-![](demo/demo.gif)
-
 #### Environment
 
 Before you begin, ensure you have the following prerequisites installed on your system:
 
 - Python (3.8 or later)
-
 - PyTorch with CUDA support
-
 - Ultralytics Library
-
 - Download weight file [yolov8x.pt](https://github.com/ultralytics/assets/releases/download/v0.0.0/yolov8x.pt) to folder `pretrained`
 
 
@@ -41,7 +42,7 @@ python demo.py --cam_para demo/cam_para.txt --video demo/demo.mp4
 
 The file `demo/cam_para.txt` is the camera parameters estimated from a single image. The code of this tool is released.  For specific steps, please refer to the Get Started.
 
-![](docs/camera_parameter_estimation.gif)
+
 
 ### The pipeline of UCMCTrack
 
@@ -67,6 +68,8 @@ First, the detection boxes are mapped onto the ground plane using homography tra
 | MOT20 test | 62.7 | 63.3 | 77.3 | 75.4 | 27,794 | 98,207 | 1,295 | 1,395 |
 
 *This result was obtained using the Python version of the code. In the paper, the C++ version of the code was used, and the Python version had slightly lower performance metrics than the C++ version (due to some subtle differences in implementation). We will address this issue in the future.*
+
+
 
 ## Get Started
 
