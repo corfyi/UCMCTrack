@@ -6,7 +6,7 @@
 
 UCMCTrack is a simple pure motion based tracker that achieves state-of-the-art performance on multiple datasets. In particular, **it achieves the first place on MOT17 without using any appearance cues**, making it highly applicable for real-time object tracking on end devices.
 
-**Tracking Vehicles**
+**Tracking Vehicles under Moving Camera**
 ![](demo/demo.gif)
 
 **Estimating Camera Parameter from a Single Image**
