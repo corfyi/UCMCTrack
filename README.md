@@ -1,26 +1,27 @@
 # UCMCTrack
 
+> **[AAAI 2024] UCMCTrack: Multi-Object Tracking with Uniform Camera Motion Compensation**
+> UCMCTrack is a simple pure motion based tracker that achieves state-of-the-art performance on multiple datasets. In particular, **it achieves the first place on MOT17 without using any appearance cues**, making it highly applicable for real-time object tracking on end devices.
+
 [![arXiv](https://img.shields.io/badge/arXiv-2312.08952-<COLOR>.svg)](https://arxiv.org/abs/2312.08952) [![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/ucmctrack-multi-object-tracking-with-uniform/multi-object-tracking-on-mot17)](https://paperswithcode.com/sota/multi-object-tracking-on-mot17?p=ucmctrack-multi-object-tracking-with-uniform) [![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/ucmctrack-multi-object-tracking-with-uniform/multi-object-tracking-on-mot20-1)](https://paperswithcode.com/sota/multi-object-tracking-on-mot20-1?p=ucmctrack-multi-object-tracking-with-uniform)
 
-**[AAAI 2024] UCMCTrack: Multi-Object Tracking with Uniform Camera Motion Compensation**
+## 🚗 Tracking Vehicles with Moving Camera
 
-UCMCTrack is a simple pure motion based tracker that achieves state-of-the-art performance on multiple datasets. In particular, **it achieves the first place on MOT17 without using any appearance cues**, making it highly applicable for real-time object tracking on end devices.
-
-**Tracking Vehicles under Moving Camera**
 ![](demo/demo.gif)
 
-**Estimating Camera Parameter from a Single Image**
+## 📷 Estimating Camera Parameter from a Single Image
+
 ![](docs/camera_parameter_estimation.gif)
 
 
 
-## News
+## 📰 News
 
 * [12/29/2023]  **Open-Sourcing a Tool for Estimating Camera Parameters from a Single Image！** For specific steps, refer to Get Started.
 
 
 
-## Demo
+## 🚩 Demo
 
 This demo demonstrates the use of YOLOv8x as the detector and UCMCTrack as the tracker for real-time vehicle detection and tracking from a video file. The demo processes the video file `demo.mp4` to detect and track vehicles, saving the tracking results in the `output` folder. **In the case of significant camera shake**, UCMCTrack still has good performance without using any appearance information.
 
@@ -44,23 +45,21 @@ The file `demo/cam_para.txt` is the camera parameters estimated from a single im
 
 
 
-### The pipeline of UCMCTrack
+## 🗺️ The pipeline of UCMCTrack
 
 First, the detection boxes are mapped onto the ground plane using homography transformation. Subsequently, the Correlated Measurement Distribution (CMD) of the target is computed. This distribution is then fed into a Kalman filter equipped with the Constant Velocity (CV) motion model and Process Noise Compensation (PNC). Next, the mapped measurement and the predicted track state are utilized as inputs to compute the Mapped Mahalanobis Distance (MMD). Finally, the Hungarian algorithm is applied to associate the mapped measurements with tracklets, thereby obtaining complete tracklets.
 
 ![](docs/pipeline.png)
 
-### Visualization of distance measures
+## 🖼️ Visualization of distance measures
 
 (a) Visualization of IoU on the image plane. IoU fails as there is no intersection between bounding boxes. (b) Visualization of Mapped Mahalanobis Distance (MMD) without Correlated Measurement Distribution (CMD). Incorrect associations occur due to insufficient utilization of distribution information. (c) Visualization of MMD with CMD. Correct associations after using the correlated probability distribution, undergoing a rotation on the ground plane.
 
 ![](docs/distance_measure.png)
 
-## Benchmark Performance
+## 🏃 Benchmark Performance
 
-[![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/ucmctrack-multi-object-tracking-with-uniform/multi-object-tracking-on-mot17)](https://paperswithcode.com/sota/multi-object-tracking-on-mot17?p=ucmctrack-multi-object-tracking-with-uniform)
-
-[![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/ucmctrack-multi-object-tracking-with-uniform/multi-object-tracking-on-mot20-1)](https://paperswithcode.com/sota/multi-object-tracking-on-mot20-1?p=ucmctrack-multi-object-tracking-with-uniform)
+[![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/ucmctrack-multi-object-tracking-with-uniform/multi-object-tracking-on-mot17)](https://paperswithcode.com/sota/multi-object-tracking-on-mot17?p=ucmctrack-multi-object-tracking-with-uniform) [![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/ucmctrack-multi-object-tracking-with-uniform/multi-object-tracking-on-mot20-1)](https://paperswithcode.com/sota/multi-object-tracking-on-mot20-1?p=ucmctrack-multi-object-tracking-with-uniform)
 
 | Dataset    | HOTA | AssA | IDF1 | MOTA | FP     | FN     | IDs   | Frag  |
 | ---------- | ---- | ---- | ---- | ---- | ------ | ------ | ----- | ----- |
@@ -71,7 +70,7 @@ First, the detection boxes are mapped onto the ground plane using homography tra
 
 
 
-## Get Started
+## 💁 Get Started
 
 - Install the required dependency packages 
 
@@ -107,7 +106,7 @@ press 'q' on the Image UI window to quit and save camera parameters.
 
 
 
-## Estimated Camera Parameters
+## 📷 Estimated Camera Parameters
 
 This directory provides camera parameters we have estimated:
 
@@ -135,7 +134,7 @@ $IntrinsicMatrix$
 
 
 
-## Roadmap
+## 📈 Roadmap
 
 We are continuously updating UCMCTrack and warmly welcome contributions to enhance its value for the community. Our current high-priority tasks are as follows:
 
@@ -166,5 +165,5 @@ We are continuously updating UCMCTrack and warmly welcome contributions to enhan
 
 
 
-## Stargazers
+## ⭐ Stargazers
 [![Stargazers repo roster for @corfyi/UCMCTrack](http://reporoster.com/stars/corfyi/UCMCTrack)](https://github.com/corfyi/UCMCTrack/stargazers)
