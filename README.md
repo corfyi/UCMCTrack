@@ -11,7 +11,7 @@
 
 
 ## 📷 Estimating Camera Parameter from a Single Image
-![](docs/camera_parameter_estimation.gif)
+![](docs/cam_para.gif)
 
 ## 📰 News
 * [12/29/2023]  **Open-Sourcing a Tool for Estimating Camera Parameters from a Single Image！** For specific steps, refer to Get Started.
