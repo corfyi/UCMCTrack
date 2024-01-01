@@ -26,23 +26,18 @@
 This demo demonstrates the use of YOLOv8x as the detector and UCMCTrack as the tracker for real-time vehicle detection and tracking from a video file. The demo processes the video file `demo.mp4` to detect and track vehicles, saving the tracking results in the `output` folder. **In the case of significant camera shake**, UCMCTrack still has good performance without using any appearance information.
 
 #### Environment
-
 Before you begin, ensure you have the following prerequisites installed on your system:
-
 - Python (3.8 or later)
 - PyTorch with CUDA support
 - Ultralytics Library
 - Download weight file [yolov8x.pt](https://github.com/ultralytics/assets/releases/download/v0.0.0/yolov8x.pt) to folder `pretrained`
-
 
 #### Run the demo
 
 ```bash
 python demo.py --cam_para demo/cam_para.txt --video demo/demo.mp4
 ```
-
 The file `demo/cam_para.txt` is the camera parameters estimated from a single image. The code of this tool is released.  For specific steps, please refer to the Get Started.
-
 
 ## 🗼 Pipeline of UCMCTrack
 First, the detection boxes are mapped onto the ground plane using homography transformation. Subsequently, the Correlated Measurement Distribution (CMD) of the target is computed. This distribution is then fed into a Kalman filter equipped with the Constant Velocity (CV) motion model and Process Noise Compensation (PNC). Next, the mapped measurement and the predicted track state are utilized as inputs to compute the Mapped Mahalanobis Distance (MMD). Finally, the Hungarian algorithm is applied to associate the mapped measurements with tracklets, thereby obtaining complete tracklets.
@@ -101,18 +96,15 @@ press 'q' on the Image UI window to quit and save camera parameters.
 
 ## 📷 Estimated Camera Parameters
 This directory provides camera parameters we have estimated:
-
 ```
 ├─cam_para
     ├─DanceTrack
     ├─MOT17
     └─MOT20
 ```
-
 We have provided the camera parameter files estimated on the datasets MOT17, MOT20 and DanceTrack. The specific format of the camera parameter file consists of following three parts. Among them, $IntrinsicMatrix$ represents the intrinsic parameters Ki of the camera, the first and second columns represent the focal lengths of the camera in the x and y directions, and the third column is the offset when the origin of the physical imaging plane moves to the pixel plane. $RotationMatrices$ and $TranslationVectors$ represent key components of the camera’s extrinsic parameters Ko. Among them, $RotationMatrices$ represents the rotation of the camera relative to the ground plane, while $TranslationVectors$ represents the offset of the camera relative to the ground plane, in millimeters.
 
 #### Sample
-
 ```txt
 RotationMatrices
 0.00000 -1.00000 0.00000
@@ -138,7 +130,7 @@ We are continuously updating UCMCTrack and warmly welcome contributions to enhan
 - [ ] Release code for replicating results on DanceTrack dataset.
 - [ ] Release code for replicating results on Kitti dataset.
 
-## Citation
+## 📋 Citation
 ```bibtex
 @inproceedings{yi2024ucmc,
   title={UCMCTrack: Multi-Object Tracking with Uniform Camera Motion Compensation},
