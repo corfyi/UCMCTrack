@@ -135,7 +135,7 @@ We are continuously updating UCMCTrack and warmly welcome contributions to enhan
 @inproceedings{yi2024ucmc,
   title={UCMCTrack: Multi-Object Tracking with Uniform Camera Motion Compensation},
   author={Kefu Yi, Kai Luo, Xiaolei Luo, Jiangui Huang, Hao Wu, Rongdong Hu, Wei Hao},
-  booktitle={AAAI},
+  booktitle={Proceedings of the AAAI conference on artificial intelligence},
   year={2024}
 }
 ```
