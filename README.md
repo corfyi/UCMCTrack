@@ -16,8 +16,8 @@
 ## 📰 News
 * [12/29/2023]  **Open-Sourcing a Tool for Estimating Camera Parameters from a Single Image！** For specific steps, refer to Get Started.
 
-## 📈 Star History
-[![Star History Chart](https://api.star-history.com/svg?repos=corfyi/UCMCTrack&type=Date)](https://star-history.com/#corfyi/UCMCTrack&Date)
+## 📈 Star Rising
+[![Star History Chart](https://api.star-history.com/svg?repos=corfyi/UCMCTrack&type=Timeline)](https://star-history.com/#corfyi/UCMCTrack&Timeline)
 
 ## ⭐ Stargazers
 [![Stargazers repo roster for @corfyi/UCMCTrack](http://reporoster.com/stars/corfyi/UCMCTrack)](https://github.com/corfyi/UCMCTrack/stargazers) [![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2Fcorfyi%2FUCMCTrack&count_bg=%2379C83D&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=hits&edge_flat=false)](https://hits.seeyoufarm.com)
