@@ -15,6 +15,7 @@
 
 ## 📰 News
 * [12/29/2023]  **Open-Sourcing a Tool for Estimating Camera Parameters from a Single Image！** For specific steps, refer to Get Started.
+* [01/02/2024]  **Usage Guide Now Available for the Camera Parameter Estimation Tool!** 
 
 ## 📈 Star Rising
 [![Star History Chart](https://api.star-history.com/svg?repos=corfyi/UCMCTrack&type=Timeline)](https://star-history.com/#corfyi/UCMCTrack&Timeline)
@@ -94,7 +95,38 @@ python util/estimate_cam_para.py --img demo/demo.jpg --cam_para demo/cam_para_te
 press 'q' on the Image UI window to quit and save camera parameters.
 
 
+
+
+## 🔧 Camera Parameter Estimation Tool
+
+This tool is designed to estimate unknown camera parameters from a single image. It's particularly useful for extracting camera parameters from images extracted from video sequences, where the exact camera settings might be unknown.
+
+### Usage
+To estimate camera parameters from an image, use the following command:
+
+```
+python util/estimate_cam_para.py --img demo/demo.jpg --cam_para demo/cam_para_test.txt
+```
+
+Here, `demo/demo.jpg` is an image extracted from a video sequence, and `demo/cam_para_test.txt` is the file where you will input and receive the camera parameters.
+
+### Step 1: Modifying the Camera Parameters File
+
+The first step involves adjusting the initial camera parameters in `demo/cam_para_test.txt`. Follow these steps:
+
+1. **Set the Center Point**: Based on the resolution of your image, set the center point in the `IntrinsicMatrix` section of the `cam_para_test.txt` file. This should be half of the image's width and height.
+2. **Set the Focal Length**: Assign a default value of 1000 to the focal length in the `IntrinsicMatrix`.
+
+### Step 2: Running the Tool
+
+After modifying the `cam_para_test.txt` file, run the command provided above. The tool will process the image and estimate the camera parameters based on the initial values you've set.
+
+By adjusting parameters like `theta_x`, `theta_y`, `theta_z`, `focal`, and `t_x`, you can align a virtual ground plane grid with the ground in the image. This process will provide you with an estimation of the camera parameters. While this estimation might not be extremely precise, it is sufficiently accurate for use with UCMCTrack.
+
+
+
 ## 📷 Estimated Camera Parameters
+
 This directory provides camera parameters we have estimated:
 ```
 ├─cam_para
@@ -120,7 +152,10 @@ IntrinsicMatrix
 0 0 1 
 ```
 
+
+
 ## 🗺 Roadmap
+
 We are continuously updating UCMCTrack and warmly welcome contributions to enhance its value for the community. Our current high-priority tasks are as follows:
 
 - [x] ~~Release code for replicating results on MOT17 dataset.~~
