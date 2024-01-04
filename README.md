@@ -16,6 +16,7 @@
 ## 📰 News
 * [12/29/2023]  **Open-Sourcing a Tool for Estimating Camera Parameters from a Single Image！** For specific steps, refer to Get Started.
 * [01/02/2024]  **Usage Guide Now Available for the Camera Parameter Estimation Tool!** 
+* [01/02/2024]  **Add head padding (HP) post-processing trick as OC-SORT.** Now the performance gap between the Python version of the code and the C++ version in the paper has been eliminated.
 
 ## 📈 Star Rising
 [![Star History Chart](https://api.star-history.com/svg?repos=corfyi/UCMCTrack&type=Timeline)](https://star-history.com/#corfyi/UCMCTrack&Timeline)
@@ -55,10 +56,8 @@ First, the detection boxes are mapped onto the ground plane using homography tra
 
 | Dataset    | HOTA | AssA | IDF1 | MOTA | FP     | FN     | IDs   | Frag  |
 | ---------- | ---- | ---- | ---- | ---- | ------ | ------ | ----- | ----- |
-| MOT17 test | 65.5 | 66.4 | 80.9 | 80.1 | 34,584 | 75,846 | 1,647 | 2,298 |
-| MOT20 test | 62.7 | 63.3 | 77.3 | 75.4 | 27,794 | 98,207 | 1,295 | 1,395 |
-
-*This result was obtained using the Python version of the code. In the paper, the C++ version of the code was used, and the Python version had slightly lower performance metrics than the C++ version (due to some subtle differences in implementation). We will address this issue in the future.*
+| MOT17 test | 65.8 | 66.4 | 81.0 | 80.6 | 36,213 | 71,454 | 1,689 | 2,220 |
+| MOT20 test | 62.8 | 63.5 | 77.4 | 75.6 | 28,678 | 96,199 | 1,335 | 1,370 |
 
 
 ## 💁 Get Started
