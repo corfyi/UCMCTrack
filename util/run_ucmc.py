@@ -7,6 +7,19 @@ import os,time
 import argparse
 
 
+class Tracklet():
+    def __init__(self,frame_id,box):
+        self.is_active = False
+        self.boxes = dict()
+        self.boxes[frame_id] = box
+
+    def add_box(self, frame_id, box):
+        self.boxes[frame_id] = box
+
+    def activate(self):
+        self.is_active = True
+
+
 def make_args():
     parser = argparse.ArgumentParser(description='Process some arguments.')
     parser.add_argument('--seq', type=str, default = "MOT17-02", help='seq name')
@@ -19,6 +32,7 @@ def make_args():
     parser.add_argument('--high_score', type=float, default=0.6, help='high score threshold')
     parser.add_argument('--conf_thresh', type=float, default=0.5, help='detection confidence threshold')
     parser.add_argument("--cmc", action="store_true", help="use cmc or not.")
+    parser.add_argument("--hp", action="store_true", help="use head padding or not.")
     args = parser.parse_args()
     return args
 
@@ -69,16 +83,45 @@ def run_ucmc(args, det_path = "det_results/mot17/yolox_x_ablation",
 
     t1 = time.time()
 
+    tracklets = dict()
+
     with open(result_file,"w") as f:
         for frame_id in range(1, detector.seq_length + 1):
             dets = detector.get_dets(frame_id, conf_thresh)
             tracker.update(dets,frame_id)
-            for i in tracker.confirmed_idx:
-                t = tracker.trackers[i] 
-                if(t.detidx < 0 or t.detidx >= len(dets)):
-                    continue
-                d = dets[t.detidx]
-                f.write(f"{frame_id},{t.id},{d.bb_left:.1f},{d.bb_top:.1f},{d.bb_width:.1f},{d.bb_height:.1f},{d.conf:.2f},-1,-1,-1\n")
+            if args.hp:
+                for i in tracker.tentative_idx:
+                    t = tracker.trackers[i]
+                    if(t.detidx < 0 or t.detidx >= len(dets)):
+                        continue
+                    if t.id not in tracklets:
+                        tracklets[t.id] = Tracklet(frame_id, dets[t.detidx].get_box())
+                    else:
+                        tracklets[t.id].add_box(frame_id, dets[t.detidx].get_box())
+                for i in tracker.confirmed_idx:
+                    t = tracker.trackers[i]
+                    if(t.detidx < 0 or t.detidx >= len(dets)):
+                        continue
+                    if t.id not in tracklets:
+                        tracklets[t.id] = Tracklet(frame_id, dets[t.detidx].get_box())
+                    else:
+                        tracklets[t.id].add_box(frame_id, dets[t.detidx].get_box())
+                    tracklets[t.id].activate()
+            else:
+                for i in tracker.confirmed_idx:
+                    t = tracker.trackers[i] 
+                    if(t.detidx < 0 or t.detidx >= len(dets)):
+                        continue
+                    d = dets[t.detidx]
+                    f.write(f"{frame_id},{t.id},{d.bb_left:.1f},{d.bb_top:.1f},{d.bb_width:.1f},{d.bb_height:.1f},{d.conf:.2f},-1,-1,-1\n")
+
+        if args.hp:
+            for frame_id in range(1, detector.seq_length + 1):
+                for id in tracklets:
+                    if tracklets[id].is_active:
+                        if frame_id in tracklets[id].boxes:
+                            box = tracklets[id].boxes[frame_id]
+                            f.write(f"{frame_id},{id},{box[0]:.1f},{box[1]:.1f},{box[2]:.1f},{box[3]:.1f},-1,-1,-1,-1\n")
 
     interpolate(orig_save_path, eval_path, n_min=3, n_dti=cdt, is_enable = True)
 

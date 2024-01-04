@@ -18,6 +18,9 @@ class Detection:
         self.y = np.zeros((2, 1))
         self.R = np.eye(4)
 
+    def get_box(self):
+        return [self.bb_left, self.bb_top, self.bb_width, self.bb_height]
+
 
     def __str__(self):
         return 'd{}, bb_box:[{},{},{},{}], conf={:.2f}, class{}, uv:[{:.0f},{:.0f}], mapped to:[{:.1f},{:.1f}]'.format(
