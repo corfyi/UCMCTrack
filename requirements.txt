@@ -5,5 +5,5 @@ lap
 scipy
 argparse
 ultralytics
-cv2
+opencv-python
 
