@@ -33,7 +33,22 @@ def make_args():
     parser.add_argument('--conf_thresh', type=float, default=0.5, help='detection confidence threshold')
     parser.add_argument("--cmc", action="store_true", help="use cmc or not.")
     parser.add_argument("--hp", action="store_true", help="use head padding or not.")
+    parser.add_argument('--u_ratio', type=float, default=0.05, help='assignment threshold')
+    parser.add_argument('--v_ratio', type=float, default=0.05, help='assignment threshold')
+    parser.add_argument('--u_max', type=float, default=13, help='assignment threshold')
+    parser.add_argument('--v_max', type=float, default=10, help='assignment threshold')
+    parser.add_argument("--add_cam_noise", action="store_true", help="add noise to camera parameter.")
     args = parser.parse_args()
+
+
+    g_u_ratio = args.u_ratio
+    g_v_ratio = args.v_ratio
+    g_u_max = args.u_max
+    g_v_max = args.v_max
+
+    print(f"u_ratio = {g_u_ratio}, v_ratio = {g_v_ratio}, u_max = {g_u_max}, v_max = {g_v_max}")
+
+
     return args
 
 def run_ucmc(args, det_path = "det_results/mot17/yolox_x_ablation",
@@ -65,7 +80,7 @@ def run_ucmc(args, det_path = "det_results/mot17/yolox_x_ablation",
     print(det_file)
     print(cam_para)
 
-    detector = Detector()
+    detector = Detector(args.add_cam_noise)
     detector.load(cam_para, det_file,gmc_file)
     print(f"seq_length = {detector.seq_length}")
 

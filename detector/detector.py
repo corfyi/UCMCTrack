@@ -33,9 +33,10 @@ class Detection:
 
 # Detector类，用于从文本文件读取任意一帧中的目标检测的结果
 class Detector:
-    def __init__(self):
+    def __init__(self, add_noise = False):
         self.seq_length = 0
         self.gmc = None
+        self.add_noise = add_noise
 
     def load(self,cam_para_file, det_file, gmc_file = None):
         self.mapper = Mapper(cam_para_file,"MOT17")
@@ -68,7 +69,17 @@ class Detector:
                 if det.det_class == -1:
                     det.det_class = 0
                 
+                if self.add_noise:
+                    if frame_id % 2 == 0:
+                        noise_z = 0.5/180.0*np.pi
+                    else:
+                        noise_z = -0.5/180.0*np.pi
+                    self.mapper.disturb_campara(noise_z)
+
                 det.y,det.R = self.mapper.mapto([det.bb_left,det.bb_top,det.bb_width,det.bb_height])
+                
+                if self.add_noise:
+                    self.mapper.reset_campara()
 
                 # 将det添加到字典中
                 if frame_id not in self.dets:

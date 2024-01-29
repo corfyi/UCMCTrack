@@ -1,6 +1,8 @@
 import numpy as np
 import os
 
+
+
 def getUVError(box):
     u = 0.05*box[3]
     v = 0.05*box[3]
@@ -84,7 +86,7 @@ def readCamParaFile(camera_para):
 
     KiKo = np.dot(Ki, Ko)
 
-    return KiKo,True
+    return Ki,Ko,True
 
 class Mapper(object):
     def __init__(self, campara_file,dataset= "kitti"):
@@ -93,7 +95,8 @@ class Mapper(object):
             self.KiKo, self.is_ok = readKittiCalib(campara_file)
             z0 = -1.73
         else:
-            self.KiKo, self.is_ok = readCamParaFile(campara_file)
+            self.Ki,self.Ko, self.is_ok = readCamParaFile(campara_file)
+            self.KiKo = np.dot(self.Ki, self.Ko)
             z0 = 0
 
         self.A[:, :2] = self.KiKo[:, :2]
@@ -132,3 +135,25 @@ class Mapper(object):
         sigma_uv[1,1] = v_err*v_err
         y,R = self.uv2xy(uv, sigma_uv)
         return y,R
+    
+    def disturb_campara(self,z):
+
+        # 根据z轴旋转，构造旋转矩阵Rz
+        Rz = np.array([[np.cos(z), -np.sin(z), 0], [np.sin(z), np.cos(z), 0], [0, 0, 1]])
+
+        R = np.dot(self.Ko[:3, :3],Rz)
+        # 将self.Ko 拷贝到新变量 Ko_new
+        Ko_new = self.Ko.copy()
+        Ko_new[:3, :3] = R
+        self.KiKo = np.dot(self.Ki, Ko_new)
+        self.A[:, :2] = self.KiKo[:, :2]
+        self.A[:, 2] = self.KiKo[:, 3]
+        self.InvA = np.linalg.inv(self.A)
+
+    def reset_campara(self):
+        self.KiKo = np.dot(self.Ki, self.Ko)
+        self.A[:, :2] = self.KiKo[:, :2]
+        self.A[:, 2] = self.KiKo[:, 3]
+        self.InvA = np.linalg.inv(self.A)
+
+
